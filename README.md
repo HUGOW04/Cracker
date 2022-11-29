@@ -8,6 +8,7 @@ or
 ```
 pip install comtypes
 pip install pywifi
+pip install comtypes
 ```
 
 ## Compile
